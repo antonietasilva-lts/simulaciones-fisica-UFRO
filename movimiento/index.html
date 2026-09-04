@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Movimiento · Simulaciones de Física UFRO</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+<a href="../" class="brand">movimiento<small>SIMULACIONES DE FÍSICA</small></a>
+<nav><a href="#lab">Laboratorio</a><a href="#tramos">Tramos</a><a href="#parabolico">Parabólico</a><a href="#conceptos">Conceptos</a><a href="#practica">Práctica</a></nav>
+<span class="course">Física para ingeniería</span>
+</header>
+
+<main>
+<section class="hero">
+<div class="hero-copy"><div class="eyebrow">EXPLORA · OBSERVA · COMPRENDE <span>Cinemática en una y dos dimensiones</span></div>
+<h1>El movimiento,<br><em>en tus manos.</em></h1>
+<p>Cambia las condiciones. Conecta lo que ves con las ecuaciones.<br>Explora MRU, MRUA y movimiento parabólico.</p>
+<a href="#lab" class="cta">Ir al laboratorio ↓</a></div>
+<div class="hero-art"><div class="sun"></div><div class="cloud cl1"></div><div class="cloud cl2"></div><div class="mountain m1"></div><div class="mountain m2"></div><div class="field"></div><div class="road"></div><img src="assets/car.svg" alt="Automóvil"></div>
+<div class="hero-quote">Una trayectoria.<br><strong>Muchas formas</strong><br>de entenderla.</div>
+</section>
+
+<section id="lab" class="section">
+<div class="section-head"><span>01 EXPERIMENTA</span><div><p>Haz una predicción antes de iniciar.</p><h2>Tu experimento</h2></div></div>
+
+<div class="labgrid">
+<aside class="panel">
+<div class="live">● EN VIVO</div>
+<div class="tabs"><button id="mruBtn">MRU</button><button id="mruaBtn" class="active">MRUA</button></div>
+<p id="modeDesc" class="muted">Aceleración constante, velocidad que cambia.</p>
+<a class="tiny-link" href="#tramos">Combinar MRU y MRUA por tramos →</a>
+
+<label>PUNTO DE PARTIDA<select id="scenario">
+<option value="accelerate">Auto que acelera</option><option value="constant">Velocidad constante</option>
+<option value="brake">Frenado hasta detenerse</option><option value="reverse">Cambio de sentido</option>
+<option value="meet">Encuentro de dos autos</option><option value="free">Experimento libre</option></select></label>
+
+<label>Posición inicial x₀ <b id="x0Label"></b><input id="x0" type="range" min="-50" max="50" value="0"></label>
+<div class="limits"><span>−50 m</span><span>50 m</span></div>
+<label>Velocidad inicial v₀ <b id="v0Label"></b><input id="v0" type="range" min="-20" max="30" step=".5" value="5"></label>
+<div class="limits"><span>−20 m/s</span><span>30 m/s</span></div>
+<label>Aceleración a <b id="aLabel"></b><input id="acc" type="range" min="-5" max="5" step=".1" value="2"></label>
+<div class="limits"><span>−5 m/s²</span><span>5 m/s²</span></div>
+
+<div id="meetControls" class="meet-controls hidden">
+<div class="subhead">AUTO B</div>
+<label>Posición inicial x₀,B <b id="bxLabel"></b><input id="bx0" type="range" min="-50" max="100" value="80"></label>
+<label>Velocidad vB <b id="bvLabel"></b><input id="bv0" type="range" min="-20" max="20" step=".5" value="-5"></label>
+</div>
+
+<label>Tiempo de observación<select id="tmax"><option value="5">5 s</option><option value="10" selected>10 s</option><option value="15">15 s</option><option value="20">20 s</option></select></label>
+<label class="switchrow"><input id="compare" type="checkbox"> Mostrar MRU de referencia al mismo tiempo</label>
+<p class="help">El MRU de referencia parte con los mismos x₀ y v₀ y se muestra como un segundo auto.</p>
+<div class="formula"><small>EL MODELO DE TU MOVIMIENTO</small><div id="eqx"></div><div id="eqv"></div><p>Con x en m, t en s y v en m/s.</p></div>
+</aside>
+
+<div class="sim panel">
+<div class="sim-head"><h3 id="sceneName">Auto que acelera</h3><span>t = <b id="timeText">0,00</b> s</span></div>
+<div class="scene">
+<div class="sky-cloud sc1"></div><div class="sky-cloud sc2"></div><div class="ridge"></div><div class="trees"></div><div class="roadscene"></div>
+<img id="carA" src="assets/car.svg" alt="Auto A"><img id="carB" src="assets/car.svg" alt="Auto B" class="carB hidden">
+<img id="carCompare" src="assets/car.svg" alt="Auto de referencia MRU" class="compare-car hidden"><div class="particle-label compareLabel hidden">MRU referencia</div>
+<div class="particle-label aLabel">Auto A</div><div class="particle-label bLabel hidden">Auto B</div>
+<div class="axislabel">Modelo de partículas · Eje +x hacia la derecha</div>
+</div>
+
+<div class="toolbar"><button id="play" class="primary">▶ Iniciar simulación</button><button id="pause">⏸ Pausar</button><button id="reset">↺</button>
+<label>Velocidad de reproducción<select id="speedSelect"><option value=".5">0,5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label></div>
+<label class="time-label">Instante de la simulación en segundos<input id="timeSlider" type="range" min="0" max="10" step=".01" value="0"></label>
+<div class="limits"><span>0 s</span><span id="timeMaxText">10 s</span></div>
+<div class="stats"><div><small>POSICIÓN x</small><b id="statX"></b></div><div><small>VELOCIDAD v</small><b id="statV"></b></div><div><small>ACELERACIÓN a</small><b id="statA"></b></div><div><small>DESPLAZAMIENTO Δx</small><b id="statD"></b></div></div>
+
+<div class="graphs-header"><h3>Tres miradas al mismo movimiento</h3><label class="switchrow"><input id="showArea" type="checkbox"> Ver área en v–t</label></div>
+<div class="charts"><article><h4>Posición</h4><canvas id="xGraph" width="360" height="220"></canvas><small>La pendiente es la velocidad.</small></article>
+<article><h4>Velocidad</h4><canvas id="vGraph" width="360" height="220"></canvas><small>El área con signo es Δx.</small></article>
+<article><h4>Aceleración</h4><canvas id="aGraph" width="360" height="220"></canvas><small>El área con signo es Δv.</small></article></div>
+
+<div class="insight">✦<div><h3>¿Qué estás observando?</h3><p>Rapidez |v|: <b id="speedVal"></b> &nbsp; Distancia recorrida: <b id="distanceVal"></b></p><p id="insightText">Arrastra el tiempo o toca un gráfico para explorar cualquier instante.</p></div></div>
+</div></div>
+</section>
+
+<section id="tramos" class="section soft">
+<div class="section-head"><span>MOVIMIENTO POR TRAMOS</span><div><h2>Combina MRU y MRUA en un recorrido continuo.</h2><p>Cada tramo comienza con la posición y velocidad finales del anterior; en MRU, a = 0.</p></div></div>
+<div class="segments-grid">
+<div class="panel">
+<label>Ejemplo<select id="segmentPreset"><option value="mixed">MRU → acelerar → frenar</option><option value="traffic">Tráfico urbano</option><option value="turn">Cambio de sentido</option></select></label>
+<label>Posición inicial (m)<input id="segX0" type="number" value="0"></label><label>Velocidad inicial (m/s)<input id="segV0" type="number" value="5"></label>
+<div id="segmentList"></div><button id="addSegment" class="primary">+ Agregar tramo</button><p class="help">Hasta 10 tramos.</p>
+<div class="toolbar"><button id="playSegments" class="primary">▶ Iniciar recorrido</button><button id="pauseSegments">⏸ Pausar</button><button id="resetSegments">↺ Reiniciar</button>
+<label>Reproducción<select id="segSpeed"><option value=".5">0,5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label></div>
+<label>Explorar el tiempo (s)<input id="segTime" type="range" min="0" step=".01" value="0"></label>
+</div>
+<div class="panel">
+<div class="segment-scene"><div class="ridge seg-ridge"></div><div class="trees"></div><div class="roadscene"></div><img id="segCar" src="assets/car.svg" alt="Auto en movimiento por tramos"><div id="segTrail" class="seg-trail"></div><div class="axislabel">Recorrido por tramos · la franja inferior indica el tramo activo</div><div id="segmentBands" class="segment-bands"></div></div>
+<div class="seg-current"><span>t = <b id="segNow">0,00</b> s</span><span>Tramo <b id="segCurrent">01</b></span><span>x = <b id="segPos">0,0</b> m</span><span>v = <b id="segVel">5,0</b> m/s</span></div>
+<h3>Posición x(t) · m</h3><canvas id="segXGraph" width="820" height="190"></canvas>
+<h3>Velocidad v(t) · m/s</h3><canvas id="segVGraph" width="820" height="190"></canvas>
+<h3>Aceleración a(t) · m/s²</h3><canvas id="segAGraph" width="820" height="190"></canvas>
+<p class="help">Los colores identifican los tramos. En los límites, x y v son continuas; a puede cambiar de golpe.</p>
+</div></div>
+<div class="tablewrap"><table><caption>Resumen por tramos · tiempos globales</caption><thead><tr><th>Tramo</th><th>Tipo</th><th>t inicial</th><th>t final</th><th>x inicial</th><th>x final</th><th>v inicial</th><th>v final</th><th>a</th></tr></thead><tbody id="segmentTable"></tbody></table></div>
+</section>
+
+<section id="parabolico" class="section">
+<div class="section-head"><span>01B MOVIMIENTO EN DOS DIMENSIONES</span><div><h2>Lanza, observa y descompone.</h2><p>La trayectoria es curva, pero cada componente obedece un movimiento conocido.</p></div></div>
+<div class="labgrid">
+<aside class="panel">
+<h3>Tu lanzamiento</h3><p class="help">g = 9,81 m/s²</p>
+<label>ESCENARIO<select id="projPreset"><option value="angle">Lanzamiento a 45°</option><option value="high">Lanzamiento alto</option><option value="horizontal">Lanzamiento horizontal</option><option value="low">Ángulo bajo</option><option value="free">Experimento libre</option></select></label>
+<label>Rapidez inicial v₀ <b id="pv0Label"></b><input id="pv0" type="range" min="5" max="50" step=".5" value="20"></label><div class="limits"><span>5 m/s</span><span>50 m/s</span></div>
+<label>Ángulo θ <b id="thetaLabel"></b><input id="theta" type="range" min="0" max="85" value="45"></label><div class="limits"><span>0°</span><span>85°</span></div>
+<label>Altura inicial y₀ <b id="py0Label"></b><input id="py0" type="range" min="0" max="20" step=".5" value="0"></label><div class="limits"><span>0 m</span><span>20 m</span></div>
+<label class="switchrow"><input id="showVelocity" type="checkbox" checked> Mostrar vector velocidad</label>
+<label class="switchrow"><input id="showComponents" type="checkbox" checked> Mostrar componentes</label>
+<div class="formula"><small>MODELO SIN RESISTENCIA DEL AIRE</small>x = v₀ cos(θ)t<br>y = y₀ + v₀ sen(θ)t − ½gt²<p>vₓ es constante; vᵧ cambia por la gravedad.</p></div>
+</aside>
+<div class="sim panel">
+<div class="sim-head"><h3>Trayectoria del proyectil</h3><span>t = <b id="projTimeText">0,00</b> s</span></div>
+<div class="projectile-bg"><canvas id="projectileCanvas" width="900" height="380"></canvas></div>
+<div class="toolbar"><button id="launchBtn" class="primary">↗ Iniciar lanzamiento</button><button id="projReset">↺</button></div>
+<label>Instante del lanzamiento<input id="projTime" type="range" min="0" step=".01" value="0"></label>
+<div class="limits"><span>0 s</span><span id="flightLimit"></span></div>
+<div class="stats"><div><small>POSICIÓN x</small><b id="projX"></b></div><div><small>POSICIÓN y</small><b id="projY"></b></div><div><small>VELOCIDAD vₓ</small><b id="projVx"></b></div><div><small>VELOCIDAD vᵧ</small><b id="projVy"></b></div></div>
+<div class="summary3"><div><small>TIEMPO DE VUELO</small><b id="flight"></b></div><div><small>ALTURA MÁXIMA</small><b id="maxHeight"></b></div><div><small>ALCANCE</small><b id="range"></b></div></div>
+<div class="fourcharts"><article><h4>x(t)</h4><canvas id="pgx" width="360" height="190"></canvas><small>MRU horizontal.</small></article><article><h4>y(t)</h4><canvas id="pgy" width="360" height="190"></canvas><small>MRUA vertical.</small></article><article><h4>vₓ(t)</h4><canvas id="pgvx" width="360" height="190"></canvas><small>Constante.</small></article><article><h4>vᵧ(t)</h4><canvas id="pgvy" width="360" height="190"></canvas><small>Cero en la altura máxima.</small></article></div>
+<div class="insight">✦<div><h3>Dos movimientos independientes</h3><p>La componente horizontal evoluciona como MRU; la vertical como MRUA con aceleración −g.</p></div></div>
+</div></div>
+</section>
+
+<section id="conceptos" class="section soft">
+<div class="section-head"><span>02 CONECTA LAS IDEAS</span><div><h2>Menos memoria. Más significado.</h2></div></div>
+<div class="concepts"><article><span>MRU 01</span><h3>La velocidad se mantiene.</h3><p>Recorre desplazamientos iguales en tiempos iguales. La aceleración es cero.</p><b>x = x₀ + v₀t<br>v = v₀ · a = 0</b><a href="#lab">Explorar MRU ↗</a></article>
+<article><span>MRUA 02</span><h3>La velocidad cambia a ritmo constante.</h3><p>En cada segundo, la velocidad cambia la misma cantidad.</p><b>x = x₀ + v₀t + ½at²<br>v = v₀ + at</b><a href="#lab">Explorar MRUA ↗</a></article>
+<article><span>PARABÓLICO 03</span><h3>Una trayectoria, dos movimientos.</h3><p>En horizontal hay MRU; en vertical, MRUA con aceleración −g.</p><b>v₀ₓ = v₀ cosθ<br>v₀ᵧ = v₀ senθ</b><a href="#parabolico">Explorar lanzamiento ↗</a></article>
+<article><span>PIENSA EN EL SIGNO 04</span><h3>¿Aceleración negativa significa frenar?</h3><p>Depende de la velocidad. Signos opuestos disminuyen la rapidez.</p><b>v·a &lt; 0 → menos rapidez<br>v·a &gt; 0 → más rapidez</b><a href="#lab">Observar cambio de sentido ↗</a></article></div>
+<details class="assumptions"><summary>Antes de calcular: componentes, unidades y supuestos <b>+</b></summary><div><p><strong>Un eje con sentido positivo:</strong> x, v y a son componentes sobre el eje horizontal. Un valor negativo indica sentido hacia −x. La rapidez |v| es escalar y nunca negativa.</p><p><strong>Distancia y desplazamiento:</strong> Δx = x − x₀ tiene signo; la distancia suma todo el trayecto y es no negativa.</p><p><strong>Modelo:</strong> t₀ = 0, movimiento rectilíneo y aceleración constante durante cada intervalo. No se modelan colisiones.</p><p><strong>Unidades SI:</strong> posición en m, tiempo en s, velocidad en m/s y aceleración en m/s². Para convertir km/h a m/s, divide entre 3,6.</p></div></details>
+</section>
+
+<section id="practica" class="section">
+<div class="section-head"><span>03 PONLO A PRUEBA</span><div><h2>Equivocarte también es parte del experimento.</h2></div></div>
+<div class="practice"><div class="practice-side"><div class="eyebrow">TU SIGUIENTE RETO</div><h2>De observar<br>a resolver.</h2><p>Doce ejercicios, a tu ritmo.<br>Calcula, comprueba y comprende.</p><div class="progress"><i id="progressFill"></i></div><b><span id="solvedCount">0</span> de 12 resueltos · <span id="progressPct">0%</span></b><p class="help">Tu avance se guarda en este navegador.</p><button id="clearProgress">Reiniciar avance</button></div>
+<div class="exercise panel"><small id="exerciseMeta"></small><h3 id="question"></h3><label>Tu respuesta · <span id="unit"></span><input id="answer" type="number" step="any"></label><div class="toolbar"><button id="check" class="primary">Comprobar respuesta ↗</button><button id="hint">Necesito una pista</button><button id="solution">Ver solución razonada</button></div><div id="feedback"></div><div class="toolbar navex"><button id="prev">← Anterior</button><button id="next" class="primary">Siguiente ejercicio →</button></div></div></div>
+</section>
+</main>
+<footer><a href="../">movimiento ↗</a><p>Creado para ICF011 – Física I,<br>Universidad de La Frontera</p></footer>
+<script src="app.js"></script>
+</body></html>
