@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Movimiento · Simulaciones de Física UFRO</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="app-top">
+  <div class="brand-wrap">
+    <img src="assets/ufro_logo.png" alt="Universidad de La Frontera" class="ufro-logo">
+    <div><a href="../" class="brand">Movimiento</a><div class="brand-sub">Simulaciones de Física · ICF011 – Física I</div></div>
+  </div>
+  <nav class="top-nav">
+    <a href="#lab" class="active">MRU y MRUA</a>
+    <a href="#tramos">Tramos</a>
+    <a href="#parabolico">Parabólico</a>
+    <a href="#practica">Ejercicios</a>
+    <a href="#conceptos">Teoría</a>
+  </nav>
+  <div class="gravity">⚙ <span>g = 9,81 m/s²</span></div>
+</header>
+
+<div class="app-shell">
+<aside class="side">
+  <a href="#lab" class="side-link active"><span class="ico">🚙</span><span><b>MRU y MRUA</b><small>Movimiento en línea recta</small></span></a>
+  <a href="#tramos" class="side-link"><span class="ico">〰</span><span><b>Movimiento por tramos</b><small>Varios tramos con distintas a y v</small></span></a>
+  <a href="#parabolico" class="side-link"><span class="ico">◒</span><span><b>Lanzamiento parabólico</b><small>Movimiento en 2D</small></span></a>
+  <a href="#practica" class="side-link"><span class="ico">☑</span><span><b>Ejercicios</b><small>12 problemas interactivos</small></span></a>
+  <a href="#conceptos" class="side-link"><span class="ico">A</span><span><b>Teoría y fórmulas</b><small>Conceptos clave</small></span></a>
+  <div class="side-quote">“La física en tus manos”<small>Creado para ICF011 – Física I<br>Universidad de La Frontera</small></div>
+</aside>
+
+<main class="content">
+<section id="lab" class="dash-section">
+  <div class="section-title"><div><h1>MRU y MRUA</h1><p>Compara un movimiento con velocidad constante y otro con aceleración constante.</p></div><span class="tag">COMPARACIÓN EN VIVO</span></div>
+
+  <div class="sim-card">
+    <div class="sim-topline"><div><b id="sceneName">Auto que acelera</b><small>Dos modelos sobre el mismo eje +x</small></div><div class="time-pill">t = <b id="timeText">0,00</b> s</div></div>
+    <div class="road-stage">
+      <div class="mountains"></div><div class="tree-line"></div><div class="asphalt"></div><div class="road-dashes"></div>
+      <img id="carCompare" src="assets/car.svg" class="car mru-car" alt="Auto MRU">
+      <img id="carA" src="assets/car_red.svg" class="car mrua-car" alt="Auto MRUA">
+      <img id="carB" src="assets/car.svg" class="car carB hidden" alt="Auto B">
+      <div class="car-label label-mru">MRU</div><div class="car-label label-mrua">MRUA</div><div class="car-label bLabel hidden">Auto B</div>
+      <div class="scale"><span>0</span><span>50</span><span>100</span><span>150</span><span>200</span><span>250</span><span>300</span><span>350</span><span>400</span></div>
+    </div>
+
+    <div class="playbar">
+      <button id="play" class="btn green">▶ Iniciar</button>
+      <button id="pause" class="btn amber">⏸ Pausar</button>
+      <button id="reset" class="btn violet">↻ Reiniciar</button>
+      <label class="speed-control">Velocidad de simulación:
+        <input id="speedRange" type="range" min=".5" max="2" step=".5" value="1">
+        <select id="speedSelect"><option value=".5">0,5×</option><option value="1" selected>1×</option><option value="2">2×</option></select>
+      </label>
+    </div>
+
+    <div class="model-controls">
+      <div class="model-box blue">
+        <div class="model-head"><span class="bar"></span><div><b>Auto MRU</b><small>velocidad constante</small></div></div>
+        <label>Posición inicial x₀ <input id="mruX0" type="number" value="0"></label>
+        <label>Velocidad v <input id="mruV" type="number" value="20" step=".5"></label>
+      </div>
+      <div class="model-box red">
+        <div class="model-head"><span class="bar"></span><div><b>Auto MRUA</b><small>aceleración constante</small></div></div>
+        <label>x₀ <input id="x0" type="number" value="0"></label>
+        <label>v₀ <input id="v0" type="number" value="0" step=".5"></label>
+        <label>a <input id="acc" type="number" value="2" step=".1"></label>
+      </div>
+    </div>
+
+    <div class="scenario-row">
+      <label>Escenario<select id="scenario"><option value="accelerate">Auto que acelera</option><option value="constant">Velocidad constante</option><option value="brake">Frenado hasta detenerse</option><option value="reverse">Cambio de sentido</option><option value="meet">Encuentro de dos autos</option><option value="free">Experimento libre</option></select></label>
+      <label>Tiempo de observación<select id="tmax"><option value="5">5 s</option><option value="10">10 s</option><option value="15">15 s</option><option value="20" selected>20 s</option></select></label>
+      <label class="switchrow"><input id="compare" type="checkbox" checked> Mostrar ambos modelos</label>
+      <div id="meetControls" class="meet-controls hidden"><label>Auto B x₀<input id="bx0" type="number" value="80"></label><label>Auto B v<input id="bv0" type="number" value="-5" step=".5"></label><span id="bxLabel" hidden></span><span id="bvLabel" hidden></span></div>
+    </div>
+
+    <label class="timeline">Instante de simulación<input id="timeSlider" type="range" min="0" max="20" step=".01" value="0"></label>
+    <div class="chart-grid three">
+      <article><h3>Posición vs. tiempo</h3><canvas id="xGraph" width="420" height="245"></canvas></article>
+      <article><h3>Velocidad vs. tiempo</h3><canvas id="vGraph" width="420" height="245"></canvas><label class="switchrow compact"><input id="showArea" type="checkbox"> Área = Δx</label></article>
+      <article><h3>Aceleración vs. tiempo</h3><canvas id="aGraph" width="420" height="245"></canvas></article>
+    </div>
+
+    <div class="bottom-info">
+      <div class="current-values">
+        <h3>Valores actuales</h3>
+        <div class="value-row blue"><b>🚙 MRU</b><span>x = <strong id="mruStatX">0,0 m</strong></span><span>v = <strong id="mruStatV">20,0 m/s</strong></span><span>a = <strong>0 m/s²</strong></span></div>
+        <div class="value-row red"><b>🚗 MRUA</b><span>x = <strong id="statX">0,0 m</strong></span><span>v = <strong id="statV">0,0 m/s</strong></span><span>a = <strong id="statA">2,0 m/s²</strong></span></div>
+        <div class="micro-values"><span>Δx MRUA: <b id="statD"></b></span><span>|v|: <b id="speedVal"></b></span><span>Distancia: <b id="distanceVal"></b></span></div>
+      </div>
+      <div class="observation"><h3>¿Qué estás observando?</h3><p id="insightText">El MRU mantiene su velocidad; el MRUA cambia su velocidad linealmente.</p><div class="formula-line"><span id="eqx"></span><span id="eqv"></span></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="tramos" class="dash-section">
+  <div class="section-title"><div><h2>Movimiento por tramos</h2><p>Construye un recorrido continuo combinando MRU y MRUA.</p></div><span class="tag">RECORRIDO CONTINUO</span></div>
+  <div class="sim-card">
+    <div class="segment-stage">
+      <div class="mountains"></div><div class="tree-line"></div><div class="asphalt"></div><div class="road-dashes"></div>
+      <img id="segCar" src="assets/car.svg" class="car" alt="Auto por tramos">
+      <div id="segmentBands" class="segment-bands"></div>
+      <div class="seg-badge">Tramo <b id="segCurrent">01</b></div>
+    </div>
+    <div class="playbar">
+      <button id="playSegments" class="btn green">▶ Iniciar</button><button id="pauseSegments" class="btn amber">⏸ Pausar</button><button id="resetSegments" class="btn violet">↻ Reiniciar</button>
+      <label class="speed-control">Velocidad:<select id="segSpeed"><option value=".5">0,5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label>
+    </div>
+    <div class="tramos-layout">
+      <div class="segment-editor">
+        <label>Ejemplo<select id="segmentPreset"><option value="mixed">MRU → acelerar → frenar</option><option value="traffic">Tráfico urbano</option><option value="turn">Cambio de sentido</option></select></label>
+        <div class="mini-grid"><label>x inicial<input id="segX0" type="number" value="0"></label><label>v inicial<input id="segV0" type="number" value="5"></label></div>
+        <div id="segmentList"></div>
+        <button id="addSegment" class="btn violet">+ Agregar tramo</button>
+      </div>
+      <div class="tramos-main">
+        <div class="seg-current"><span>t <b id="segNow">0,00 s</b></span><span>x <b id="segPos">0,0 m</b></span><span>v <b id="segVel">5,0 m/s</b></span></div>
+        <label class="timeline">Explorar tiempo<input id="segTime" type="range" min="0" step=".01" value="0"></label>
+        <div class="chart-grid three"><article><h3>x(t)</h3><canvas id="segXGraph" width="420" height="210"></canvas></article><article><h3>v(t)</h3><canvas id="segVGraph" width="420" height="210"></canvas></article><article><h3>a(t)</h3><canvas id="segAGraph" width="420" height="210"></canvas></article></div>
+      </div>
+    </div>
+    <div class="tablewrap"><table><caption>Resumen por tramos</caption><thead><tr><th>Tramo</th><th>Tipo</th><th>t inicial</th><th>t final</th><th>x inicial</th><th>x final</th><th>v inicial</th><th>v final</th><th>a</th></tr></thead><tbody id="segmentTable"></tbody></table></div>
+  </div>
+</section>
+
+<section id="parabolico" class="dash-section">
+  <div class="section-title"><div><h2>Lanzamiento parabólico</h2><p>Descompone el movimiento en componentes horizontal y vertical.</p></div><span class="tag">MOVIMIENTO 2D</span></div>
+  <div class="sim-card parab-grid">
+    <div class="proj-controls">
+      <label>Escenario<select id="projPreset"><option value="angle">Lanzamiento a 45°</option><option value="high">Lanzamiento alto</option><option value="horizontal">Lanzamiento horizontal</option><option value="low">Ángulo bajo</option><option value="free">Experimento libre</option></select></label>
+      <label>Rapidez inicial v₀ <b id="pv0Label"></b><input id="pv0" type="range" min="5" max="50" step=".5" value="20"></label>
+      <label>Ángulo θ <b id="thetaLabel"></b><input id="theta" type="range" min="0" max="85" value="45"></label>
+      <label>Altura inicial y₀ <b id="py0Label"></b><input id="py0" type="range" min="0" max="20" step=".5" value="0"></label>
+      <label class="switchrow"><input id="showVelocity" type="checkbox" checked> Vector velocidad</label>
+      <label class="switchrow"><input id="showComponents" type="checkbox" checked> Componentes</label>
+    </div>
+    <div>
+      <div class="projectile-box"><canvas id="projectileCanvas" width="920" height="390"></canvas><div class="time-pill proj-pill">t = <b id="projTimeText">0,00</b> s</div></div>
+      <div class="playbar"><button id="launchBtn" class="btn green">↗ Iniciar</button><button id="projReset" class="btn violet">↻ Reiniciar</button></div>
+      <label class="timeline">Instante del lanzamiento<input id="projTime" type="range" min="0" step=".01" value="0"></label>
+      <div class="proj-stats"><span>x <b id="projX"></b></span><span>y <b id="projY"></b></span><span>vₓ <b id="projVx"></b></span><span>vᵧ <b id="projVy"></b></span><span>T vuelo <b id="flight"></b></span><span>h máx <b id="maxHeight"></b></span><span>alcance <b id="range"></b></span></div><span id="flightLimit" hidden></span>
+      <div class="chart-grid four"><article><h3>x(t)</h3><canvas id="pgx" width="360" height="190"></canvas></article><article><h3>y(t)</h3><canvas id="pgy" width="360" height="190"></canvas></article><article><h3>vₓ(t)</h3><canvas id="pgvx" width="360" height="190"></canvas></article><article><h3>vᵧ(t)</h3><canvas id="pgvy" width="360" height="190"></canvas></article></div>
+    </div>
+  </div>
+</section>
+
+<section id="practica" class="dash-section">
+  <div class="section-title"><div><h2>Ejercicios</h2><p>Calcula, comprueba y aprende con retroalimentación inmediata.</p></div><span class="tag"><span id="solvedCount">0</span> / 12</span></div>
+  <div class="practice-card">
+    <div class="practice-progress"><div class="progress"><i id="progressFill"></i></div><b><span id="progressPct">0%</span> completado</b><button id="clearProgress" class="btn violet">Reiniciar avance</button></div>
+    <div class="exercise"><small id="exerciseMeta"></small><h3 id="question"></h3><label>Tu respuesta · <span id="unit"></span><input id="answer" type="number" step="any"></label><div class="playbar"><button id="check" class="btn green">Comprobar</button><button id="hint" class="btn amber">Pista</button><button id="solution" class="btn violet">Ver solución</button></div><div id="feedback"></div><div class="exercise-nav"><button id="prev" class="btn ghost">← Anterior</button><button id="next" class="btn violet">Siguiente →</button></div></div>
+  </div>
+</section>
+
+<section id="conceptos" class="dash-section">
+  <div class="section-title"><div><h2>Teoría y fórmulas</h2><p>Las ideas esenciales detrás de cada movimiento.</p></div><span class="tag">RESUMEN</span></div>
+  <div class="theory-grid">
+    <article><span>MRU</span><h3>Velocidad constante</h3><p>La aceleración es cero.</p><b>x = x₀ + vt</b></article>
+    <article><span>MRUA</span><h3>Aceleración constante</h3><p>La velocidad cambia linealmente.</p><b>x = x₀ + v₀t + ½at²<br>v = v₀ + at</b></article>
+    <article><span>PARABÓLICO</span><h3>Dos movimientos independientes</h3><p>MRU horizontal y MRUA vertical.</p><b>v₀ₓ = v₀ cosθ<br>v₀ᵧ = v₀ senθ</b></article>
+    <article><span>SIGNOS</span><h3>¿Frenar o acelerar?</h3><p>Depende del producto v·a.</p><b>v·a &lt; 0 → disminuye rapidez<br>v·a &gt; 0 → aumenta rapidez</b></article>
+  </div>
+</section>
+
+</main></div>
+<footer>Creado para ICF011 – Física I · Universidad de La Frontera</footer>
+<script src="app.js"></script>
+</body></html>
