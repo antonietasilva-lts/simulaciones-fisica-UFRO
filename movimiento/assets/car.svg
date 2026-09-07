@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 220">
+<defs>
+ <linearGradient id="body" x1="0" x2="1">
+  <stop offset="0" stop-color="#1857b6"/>
+  <stop offset=".48" stop-color="#2676e8"/>
+  <stop offset="1" stop-color="#2676e8"/>
+ </linearGradient>
+ <linearGradient id="glass" x1="0" x2="1">
+  <stop stop-color="#dff3ff"/><stop offset="1" stop-color="#8fc7ec"/>
+ </linearGradient>
+</defs>
+<!-- unmistakable hatchback/sedan silhouette -->
+<path d="M45 139
+ C51 116 69 103 103 98
+ L163 91
+ L205 51
+ C216 40 231 35 249 35
+ H321
+ C348 35 368 46 382 66
+ L401 94
+ L453 103
+ C471 107 484 121 488 141
+ L491 154
+ H30
+ L33 147
+ C36 142 40 140 45 139Z" fill="url(#body)"/>
+<path d="M213 53L179 90H258V53Z" fill="url(#glass)"/>
+<path d="M270 53V90H383L362 62C355 55 345 53 331 53Z" fill="url(#glass)"/>
+<path d="M264 51V92" stroke="#1857b6" stroke-width="8"/>
+<path d="M163 94H405" stroke="#1857b6" stroke-width="4" opacity=".55"/>
+<path d="M308 107h30" stroke="#1857b6" stroke-width="5" stroke-linecap="round"/>
+<!-- headlight on the right = front -->
+<rect x="450" y="114" width="28" height="14" rx="6" fill="#fff1a1"/>
+<path d="M472 143h30" stroke="#303643" stroke-width="7" stroke-linecap="round"/>
+<!-- taillight on the left -->
+<rect x="48" y="113" width="13" height="18" rx="4" fill="#b8172d"/>
+<!-- wheels -->
+<circle cx="131" cy="153" r="38" fill="#252a34"/>
+<circle cx="131" cy="153" r="22" fill="#b9c0cb"/>
+<circle cx="131" cy="153" r="9" fill="#5f6877"/>
+<circle cx="402" cy="153" r="38" fill="#252a34"/>
+<circle cx="402" cy="153" r="22" fill="#b9c0cb"/>
+<circle cx="402" cy="153" r="9" fill="#5f6877"/>
+</svg>
